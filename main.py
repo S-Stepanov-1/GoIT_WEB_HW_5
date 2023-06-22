@@ -67,6 +67,9 @@ async def main():
     pb = PBHandler()
     pb.create_session()
 
+    #       === ADDITIONAL TASKS №1 ===
+    pb.CURRENCIES.extend(sys.argv[2:])  # add currency like PLZ, CAD etc.
+
     answer_data_list = await pb.prepare_data(days)
     pprint(answer_data_list)
 
