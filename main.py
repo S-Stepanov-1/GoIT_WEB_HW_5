@@ -16,7 +16,7 @@ class APIHandler(ABC):
         raise NotImplemented
 
     @abstractmethod
-    def prepare_data(self, days):
+    def prepare_data(self, x_days):
         raise NotImplemented
 
 
@@ -26,11 +26,11 @@ class PBHandler(APIHandler):
     def create_session(self):
         self.session = aiohttp.ClientSession()
 
-    async def prepare_data(self, days: int):
+    async def prepare_data(self, x_days: int):
         async with self.session as session:
 
             tasks = []
-            for day in range(days):
+            for day in range(x_days):
                 url = URL + (datetime.today() - timedelta(days=day)).strftime('%d.%m.%Y')
                 tasks.append(self.get_data_from_json(session, url))
 
@@ -52,30 +52,30 @@ class PBHandler(APIHandler):
                 if rate["currency"] in PBHandler.CURRENCIES:
                     currency_dict[date][rate["currency"]] = {"purchase": rate["purchaseRateNB"],
                                                              "sale": rate["saleRateNB"]}
-
             return currency_dict
 
 
-async def main():
-    #       === User input handling ===
-    if len(sys.argv) < 2 or sys.argv[1].isalpha():
-        print("\nPlease, when calling the program, pass the integer number of days for which you want to see the exchange rate.\n")
-        exit(1)
-
-    days = int(sys.argv[1]) if 1 < int(sys.argv[1]) <= 10 else 1
-
+async def main(x_days):
     pb = PBHandler()
     pb.create_session()
 
     #       === ADDITIONAL TASKS №1 ===
     pb.CURRENCIES.extend(sys.argv[2:])  # add currency like PLZ, CAD etc.
 
-    answer_data_list = await pb.prepare_data(days)
-    pprint(answer_data_list)
+    return await pb.prepare_data(x_days)
 
 
 if __name__ == "__main__":
+    #       === User input handling ===
+    if len(sys.argv) < 2 or sys.argv[1].isalpha():
+        print(
+            "\nPlease, when calling the program, pass the integer number of days for which you want to see the exchange rate.\n")
+        exit(1)
+
+    days = int(sys.argv[1]) if 1 < int(sys.argv[1]) <= 10 else 1
+
     if platform.system() == 'Windows':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-    asyncio.run(main())
+    answer_data_list = asyncio.run(main(days))
+    pprint(answer_data_list)

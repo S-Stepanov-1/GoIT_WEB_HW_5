@@ -9,6 +9,7 @@ packages = [{include = "goit_web_hw_5"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 aiohttp = "^3.8.4"
+websockets = "^11.0.3"
 
 
 [build-system]
