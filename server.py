@@ -39,11 +39,29 @@ class Server:
             #   === Additional task №2 in HW 5 ===
             words = message.split()
             if words[0] == "exchange":
-                answer_data_list = await main_program.main(x_days=1)
-                await self.send_to_clients(json.dumps(answer_data_list))
+                if words[1] and words[1].isdigit():
+                    days = int(words[1]) if 1 < int(words[1]) <= 10 else 1
+                    answer_data_list = await main_program.main(x_days=days)
+                    prepared_str = self.str_from_data_list(answer_data_list)
+                    await self.send_to_clients(prepared_str)
             #   =====================================================
+
             else:
                 await self.send_to_clients(message)
+
+    #       === Additional task №2 in HW 5 ===
+    @staticmethod
+    def str_from_data_list(answer_data_list):
+        result = ""
+        for item in answer_data_list:
+            for date, currencies in item.items():
+                result += f"{date}: "
+                currency_strings = []
+                for currency, rates in currencies.items():
+                    rate_string = f"{currency} (purchase: {rates['purchase']}, sale: {rates['sale']})"
+                    currency_strings.append(rate_string)
+                result += ';  '.join(currency_strings) + "\n"
+        return result
 
 
 async def main():
