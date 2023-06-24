@@ -33,9 +33,12 @@ For work from browser you need just start the server:
 ```
 py server.py
 ```
+![Server is running](server is running.png)
 then start the consumer - in this window(s) you will see the results:
 ```
 py consumer.py
 ```
 
 After that, open the file `index.html` in your browser and type some message into the form. All connected consumers will receive as messages whatever you enter in the form. But if you enter the word `exchange`, you will get the exchange rate for today. You can also type `exchange n_days` through a space to get exchange rates for the last n_days.
+
+![Consumers and producer as browser](consumers and producer in browser.png)
