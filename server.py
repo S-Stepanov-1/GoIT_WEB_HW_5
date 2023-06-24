@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import websockets
-import json
 import main as main_program
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
@@ -37,13 +36,18 @@ class Server:
         async for message in ws:
 
             #   === Additional task №2 in HW 5 ===
+            days = 1
             words = message.split()
             if words[0] == "exchange":
-                if words[1] and words[1].isdigit():
-                    days = int(words[1]) if 1 < int(words[1]) <= 10 else 1
-                    answer_data_list = await main_program.main(x_days=days)
-                    prepared_str = self.str_from_data_list(answer_data_list)
-                    await self.send_to_clients(prepared_str)
+                try:
+                    if 1 < int(words[1]) <= 10:
+                        days = int(words[1])
+                except (IndexError, ValueError):
+                    pass
+
+                answer_data_list = await main_program.main(x_days=days)
+                prepared_str = self.str_from_data_list(answer_data_list)
+                await self.send_to_clients(prepared_str)
             #   =====================================================
 
             else:
