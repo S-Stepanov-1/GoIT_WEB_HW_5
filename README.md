@@ -18,13 +18,15 @@ py main.py n_days
 ```
 where `n_days` is the integer number of days for which you want to get exchange rates.
 #### If you enter a number smaller than one or larger than 10, you will only get information for one day.
+### Program example `main.py`
+![Main program is running](main_program.png)
 <br><br>
 
 You can also run the program with the following command:
 ```
 py main.py n_days code_1 code_2 ... code_i
 ```
-where code_1 , code_2 ... _code_i are the codes of the currencies you want to view, e.g. `PLZ`, `CAD`, `XAU`, `CHF` etc.
+where code_1 , code_2 ... _code_i are the codes of the currencies you want to view, e.g. `PLN`, `CAD`, `XAU`, `CHF` etc.
 #### The codes should be entered with a space.
 <br>
 
@@ -43,4 +45,4 @@ py consumer.py
 After that, open the file `index.html` in your browser and type some message into the form. All connected consumers will receive as messages whatever you enter in the form. But if you enter the word `exchange`, you will get the exchange rate for today. You can also type `exchange n_days` through a space to get exchange rates for the last n_days.
 
 ### Consumers and producer as browser
-![Consumers and producer as browser](consumers_and_producer.png)
+![Consumers and producer as browser](consumers_&_producer.png)
