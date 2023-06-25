@@ -60,7 +60,7 @@ async def main(x_days):
     pb.create_session()
 
     #       === ADDITIONAL TASKS №1 ===
-    pb.CURRENCIES.extend(sys.argv[2:])  # add currency like PLZ, CAD etc.
+    pb.CURRENCIES.extend(sys.argv[2:])  # add currency like PLN, CAD etc.
 
     return await pb.prepare_data(x_days)
 

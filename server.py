@@ -5,6 +5,7 @@ import main as main_program
 from websockets import WebSocketServerProtocol
 from websockets.exceptions import ConnectionClosedOK
 
+
 logging.basicConfig(level=logging.INFO)
 
 
@@ -38,6 +39,7 @@ class Server:
             #   === Additional task №2 in HW 5 ===
             days = 1
             words = message.split()
+
             if words[0] == "exchange":
                 try:
                     if 1 < int(words[1]) <= 10:
@@ -53,7 +55,7 @@ class Server:
             else:
                 await self.send_to_clients(message)
 
-    #       === Additional task №2 in HW 5 ===
+    #       === Additional task №2 and №3 in HW 5 ===
     @staticmethod
     def str_from_data_list(answer_data_list):
         result = ""
